@@ -246,15 +246,18 @@
         }
 
         .action-btn {
-            padding: 20px;
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
+    padding: 20px;
+    background: #f9fafb;
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s;
+    color: #1f2937;
+    font-size: 18px;
+    line-height: 1.8;
+}
 
         .action-btn:hover {
             border-color: #10b981;
@@ -372,11 +375,17 @@
             <div class="divider"></div>
             
             <h2>What would you like to do?</h2>
-            <div class="action-menu">
-                <button class="action-btn" onclick="adjustBudget()">📊 Adjust Budget</button>
-                <button class="action-btn" onclick="viewTips()">💡 Get Money-Saving Tips</button>
-                <button class="action-btn" onclick="resetApp()">🔄 Start New Budget</button>
-            </div>
+<div class="action-menu">
+    <button class="action-btn" onclick="adjustBudget()">
+        📊<br><strong>Adjust Budget</strong>
+    </button>
+    <button class="action-btn" onclick="viewTips()">
+        💡<br><strong>Get Money-Saving Tips</strong>
+    </button>
+    <button class="action-btn" onclick="resetApp()">
+        🔄<br><strong>Start New Budget</strong>
+    </button>
+</div>
         </div>
 
         <!-- Tips Screen -->
@@ -701,3 +710,4 @@
     </script>
 </body>
 </html>
+
