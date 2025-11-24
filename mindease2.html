@@ -422,17 +422,26 @@
         };
 
         function saveName() {
-            userName = document.getElementById('nameInput').value.trim();
-            if (!userName) {
-                alert('Please enter your name');
-                return;
-            }
+    userName = document.getElementById('nameInput').value.trim();
+    if (!userName) {
+        alert('Please enter your name');
+        return;
+    }
 
-            const saved = localStorage.getItem('mindease-user');
-            if (saved) {
-                const data = JSON.parse(saved);
-                checkInCount = data.checkInCount || 0;
-            }
+    const saved = localStorage.getItem('mindease-user');
+    if (saved) {
+        const data = JSON.parse(saved);
+        // Only load check-in count if it's the SAME user
+        if (data.userName === userName) {
+            checkInCount = data.checkInCount || 0;
+        } else {
+            // New user - reset count to 0
+            checkInCount = 0;
+        }
+    } else {
+        // No saved data - new user
+        checkInCount = 0;
+    }
 
             document.getElementById('welcomeScreen').classList.add('hidden');
             document.getElementById('introScreen').classList.remove('hidden');
@@ -565,3 +574,4 @@
     </script>
 </body>
 </html>
+
