@@ -134,18 +134,23 @@
             border-radius: 12px;
             cursor: pointer;
             text-align: left;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #374151;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
         }
 
         .option-btn:hover {
             border-color: #a855f7;
             background: #faf5ff;
+            transform: translateY(-2px);
         }
 
         .emoji {
-            font-size: 1.5rem;
-            margin-right: 10px;
+            font-size: 1.8rem;
+            margin-right: 15px;
         }
 
         .results {
@@ -291,11 +296,26 @@
             <h2 style="text-align: center; color: #374151;">Appetite</h2>
             <p>How's your appetite?</p>
             <div class="options">
-                <button class="option-btn" onclick="saveAnswer('appetite', 1)">Much lower than usual</button>
-                <button class="option-btn" onclick="saveAnswer('appetite', 2)">A bit lower</button>
-                <button class="option-btn" onclick="saveAnswer('appetite', 3)">Normal</button>
-                <button class="option-btn" onclick="saveAnswer('appetite', 4)">A bit higher</button>
-                <button class="option-btn" onclick="saveAnswer('appetite', 5)">Much higher</button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 1)">
+                    <span class="emoji">😟</span>
+                    <span>Much lower than usual</span>
+                </button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 2)">
+                    <span class="emoji">😕</span>
+                    <span>A bit lower</span>
+                </button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 3)">
+                    <span class="emoji">😐</span>
+                    <span>Normal</span>
+                </button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 4)">
+                    <span class="emoji">🙂</span>
+                    <span>A bit higher</span>
+                </button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 5)">
+                    <span class="emoji">😊</span>
+                    <span>Much higher</span>
+                </button>
             </div>
         </div>
 
