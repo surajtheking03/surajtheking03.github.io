@@ -1,0 +1,557 @@
+import React, { useState, useEffect } from 'react';
+import { Heart, Moon, Utensils, Zap, Focus, TrendingUp, AlertCircle, CheckCircle, Phone, MessageCircle } from 'lucide-react';
+
+export default function MindEase() {
+  const [step, setStep] = useState('welcome');
+  const [userName, setUserName] = useState('');
+  const [checkInCount, setCheckInCount] = useState(0);
+  const [isReturningUser, setIsReturningUser] = useState(false);
+  
+  const [responses, setResponses] = useState({
+    moodRating: 5,
+    sleepQuality: 3,
+    appetiteLevel: 3,
+    energyLevel: 3,
+    focusLevel: 3
+  });
+  
+  const [results, setResults] = useState(null);
+  const [copingGoal, setCopingGoal] = useState('');
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
+  const loadUserData = async () => {
+    try {
+      const result = await window.storage.get('mindease-user');
+      if (result && result.value) {
+        const data = JSON.parse(result.value);
+        setUserName(data.userName || '');
+        setCheckInCount(data.checkInCount || 0);
+        setIsReturningUser(data.checkInCount > 0);
+      }
+    } catch (error) {
+      console.log('New user, no saved data');
+    }
+  };
+
+  const saveUserData = async (name, count) => {
+    try {
+      await window.storage.set('mindease-user', JSON.stringify({
+        userName: name,
+        checkInCount: count
+      }));
+    } catch (error) {
+      console.error('Failed to save user data:', error);
+    }
+  };
+
+  const saveCheckIn = async (score, concern) => {
+    try {
+      const timestamp = new Date().toISOString();
+      const checkInData = {
+        date: timestamp,
+        score: score,
+        concern: concern,
+        responses: responses
+      };
+      await window.storage.set(`mindease-checkin-${timestamp}`, JSON.stringify(checkInData));
+    } catch (error) {
+      console.error('Failed to save check-in:', error);
+    }
+  };
+
+  const handleNameSubmit = () => {
+    if (userName.trim()) {
+      saveUserData(userName, checkInCount);
+      setStep('intro');
+    }
+  };
+
+  const calculateResults = () => {
+    const totalScore = 
+      parseInt(responses.moodRating) +
+      parseInt(responses.sleepQuality) +
+      parseInt(responses.appetiteLevel) +
+      parseInt(responses.energyLevel) +
+      parseInt(responses.focusLevel);
+
+    const newCount = checkInCount + 1;
+    setCheckInCount(newCount);
+    saveUserData(userName, newCount);
+
+    let wellnessLevel = '';
+    let concernArea = 'General Wellness';
+
+    if (totalScore < 10) {
+      wellnessLevel = 'crisis';
+    } else if (totalScore <= 15) {
+      wellnessLevel = 'low';
+    } else if (totalScore <= 22) {
+      wellnessLevel = 'moderate';
+    } else {
+      wellnessLevel = 'high';
+    }
+
+    if (responses.sleepQuality < 3) {
+      concernArea = 'Sleep Issues';
+    } else if (responses.energyLevel < 3) {
+      concernArea = 'Low Energy';
+    } else if (responses.focusLevel < 3) {
+      concernArea = 'Lack of Focus';
+    }
+
+    const resultData = {
+      totalScore,
+      wellnessLevel,
+      concernArea,
+      checkInCount: newCount
+    };
+
+    setResults(resultData);
+    saveCheckIn(totalScore, concernArea);
+    setStep('results');
+  };
+
+  const strategies = {
+    'Sleep Issues': [
+      '🌙 Set a consistent bedtime and wake time, even on weekends',
+      '📱 Put screens away 30-60 minutes before bed',
+      '🧘 Try progressive muscle relaxation or deep breathing',
+      '☕ Avoid caffeine after 2 PM',
+      '🛏️ Keep your bedroom cool, dark, and quiet',
+      '📖 Read a book or journal instead of scrolling'
+    ],
+    'Low Energy': [
+      '🚶 Take a 10-minute walk outside',
+      '💧 Drink a glass of water - dehydration causes fatigue',
+      '🍎 Eat a balanced snack with protein',
+      '☀️ Get 15 minutes of sunlight',
+      '🎵 Listen to upbeat music',
+      '😴 Take a 20-minute power nap (not longer!)'
+    ],
+    'Lack of Focus': [
+      '⏰ Use the Pomodoro Technique (25 min work, 5 min break)',
+      '📝 Write a to-do list with just 3 priorities',
+      '🎧 Try instrumental music or white noise',
+      '🧘 Do 5 minutes of mindful breathing',
+      '💻 Close unnecessary browser tabs and apps',
+      '🚶 Take a quick movement break every hour'
+    ],
+    'General Wellness': [
+      '📓 Keep a gratitude journal',
+      '🤝 Connect with a friend or loved one',
+      '🎨 Engage in a creative hobby',
+      '🏃 Move your body in a way that feels good',
+      '🌱 Try something new and challenging',
+      '😌 Practice self-compassion and celebrate small wins'
+    ]
+  };
+
+  if (step === 'welcome') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full text-center">
+          <div className="bg-gradient-to-br from-purple-400 to-pink-400 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Heart className="text-white" size={48} />
+          </div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            MindEase 🌸
+          </h1>
+          <p className="text-gray-600 mb-6">I'm here to help you check in with yourself and track your mental wellness.</p>
+          <p className="text-gray-500 text-sm mb-8 italic">This is a safe, judgment-free space.</p>
+          <div className="mb-6">
+            <input 
+              type="text"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleNameSubmit()}
+              placeholder="What's your name?"
+              className="w-full px-4 py-3 border-2 border-purple-200 rounded-lg focus:border-purple-500 focus:outline-none text-center text-lg"
+            />
+          </div>
+          <button 
+            onClick={handleNameSubmit}
+            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all w-full"
+          >
+            Continue
+          </button>
+          <p className="text-xs text-gray-400 mt-6">⚠️ This is not a substitute for professional mental health care</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'intro') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+            {isReturningUser ? `Welcome back, ${userName}! 😊` : `Nice to meet you, ${userName}!`}
+          </h2>
+          {isReturningUser && (
+            <p className="text-purple-600 font-semibold mb-4">This is check-in #{checkInCount + 1}</p>
+          )}
+          <p className="text-gray-600 mb-4">
+            {isReturningUser 
+              ? "I'm glad you're here. Let's see how you're feeling today."
+              : "I'll ask you a few quick questions about how you're feeling. It takes about 2 minutes."}
+          </p>
+          {!isReturningUser && (
+            <p className="text-gray-500 text-sm mb-6">Your responses help me understand your wellness patterns and suggest helpful strategies.</p>
+          )}
+          <button 
+            onClick={() => setStep('mood')}
+            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all w-full"
+          >
+            {isReturningUser ? "Let's Check In" : "Ready to Begin"}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'mood') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+          <div className="flex items-center mb-6">
+            <Heart className="text-purple-500 mr-3" size={32} />
+            <h2 className="text-2xl font-bold text-gray-800">How's Your Mood?</h2>
+          </div>
+          <p className="text-gray-600 mb-6">On a scale of 1-10, how would you rate your mood today?</p>
+          <div className="mb-4">
+            <input 
+              type="range"
+              min="1"
+              max="10"
+              value={responses.moodRating}
+              onChange={(e) => setResponses({...responses, moodRating: e.target.value})}
+              className="w-full h-3 bg-gradient-to-r from-red-300 via-yellow-300 to-green-300 rounded-lg appearance-none cursor-pointer"
+              style={{
+                background: `linear-gradient(to right, #fca5a5 0%, #fde047 50%, #86efac 100%)`
+              }}
+            />
+          </div>
+          <div className="flex justify-between text-sm text-gray-500 mb-2">
+            <span>1 - Very low</span>
+            <span className="text-2xl font-bold text-purple-600">{responses.moodRating}</span>
+            <span>10 - Excellent</span>
+          </div>
+          <button 
+            onClick={() => setStep('sleep')}
+            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all w-full mt-6"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'sleep') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+          <div className="flex items-center mb-6">
+            <Moon className="text-indigo-500 mr-3" size={32} />
+            <h2 className="text-2xl font-bold text-gray-800">Sleep Quality</h2>
+          </div>
+          <p className="text-gray-600 mb-6">How has your sleep been lately?</p>
+          <div className="space-y-3">
+            {[
+              { value: 1, label: 'Very Poor', emoji: '😴' },
+              { value: 2, label: 'Poor', emoji: '😕' },
+              { value: 3, label: 'Okay', emoji: '😐' },
+              { value: 4, label: 'Good', emoji: '🙂' },
+              { value: 5, label: 'Excellent', emoji: '😊' }
+            ].map(option => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  setResponses({...responses, sleepQuality: option.value});
+                  setStep('appetite');
+                }}
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                  responses.sleepQuality === option.value
+                    ? 'border-indigo-500 bg-indigo-50'
+                    : 'border-gray-200 hover:border-indigo-300'
+                }`}
+              >
+                <span className="text-2xl mr-3">{option.emoji}</span>
+                <span className="font-semibold">{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'appetite') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+          <div className="flex items-center mb-6">
+            <Utensils className="text-orange-500 mr-3" size={32} />
+            <h2 className="text-2xl font-bold text-gray-800">Appetite</h2>
+          </div>
+          <p className="text-gray-600 mb-6">How's your appetite?</p>
+          <div className="space-y-3">
+            {[
+              { value: 1, label: 'Much lower than usual' },
+              { value: 2, label: 'A bit lower' },
+              { value: 3, label: 'Normal' },
+              { value: 4, label: 'A bit higher' },
+              { value: 5, label: 'Much higher' }
+            ].map(option => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  setResponses({...responses, appetiteLevel: option.value});
+                  setStep('energy');
+                }}
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                  responses.appetiteLevel === option.value
+                    ? 'border-orange-500 bg-orange-50'
+                    : 'border-gray-200 hover:border-orange-300'
+                }`}
+              >
+                <span className="font-semibold">{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'energy') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+          <div className="flex items-center mb-6">
+            <Zap className="text-yellow-500 mr-3" size={32} />
+            <h2 className="text-2xl font-bold text-gray-800">Energy Level</h2>
+          </div>
+          <p className="text-gray-600 mb-6">How's your energy level today?</p>
+          <div className="space-y-3">
+            {[
+              { value: 1, label: 'Exhausted', emoji: '😫' },
+              { value: 2, label: 'Very low', emoji: '😔' },
+              { value: 3, label: 'Moderate', emoji: '😐' },
+              { value: 4, label: 'Good', emoji: '🙂' },
+              { value: 5, label: 'High Energy', emoji: '⚡' }
+            ].map(option => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  setResponses({...responses, energyLevel: option.value});
+                  setStep('focus');
+                }}
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                  responses.energyLevel === option.value
+                    ? 'border-yellow-500 bg-yellow-50'
+                    : 'border-gray-200 hover:border-yellow-300'
+                }`}
+              >
+                <span className="text-2xl mr-3">{option.emoji}</span>
+                <span className="font-semibold">{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'focus') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+          <div className="flex items-center mb-6">
+            <Focus className="text-blue-500 mr-3" size={32} />
+            <h2 className="text-2xl font-bold text-gray-800">Focus & Concentration</h2>
+          </div>
+          <p className="text-gray-600 mb-6">How's your ability to focus?</p>
+          <div className="space-y-3">
+            {[
+              { value: 1, label: "Can't concentrate", emoji: '😵' },
+              { value: 2, label: 'Easily distracted', emoji: '😕' },
+              { value: 3, label: 'Somewhat focused', emoji: '😐' },
+              { value: 4, label: 'Pretty focused', emoji: '🙂' },
+              { value: 5, label: 'Very sharp', emoji: '🎯' }
+            ].map(option => (
+              <button
+                key={option.value}
+                onClick={() => {
+                  setResponses({...responses, focusLevel: option.value});
+                  calculateResults();
+                }}
+                className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                  responses.focusLevel === option.value
+                    ? 'border-blue-500 bg-blue-50'
+                    : 'border-gray-200 hover:border-blue-300'
+                }`}
+              >
+                <span className="text-2xl mr-3">{option.emoji}</span>
+                <span className="font-semibold">{option.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (step === 'results' && results) {
+    const { totalScore, wellnessLevel, concernArea, checkInCount } = results;
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 p-4 py-8">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl p-8">
+            <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Your Wellness Report</h2>
+
+            {/* Crisis Warning */}
+            {wellnessLevel === 'crisis' && (
+              <div className="bg-red-100 border-2 border-red-500 rounded-xl p-6 mb-6">
+                <div className="flex items-start mb-4">
+                  <AlertCircle className="text-red-600 mr-3 flex-shrink-0" size={32} />
+                  <div>
+                    <h3 className="text-xl font-bold text-red-800 mb-2">{userName}, I'm concerned about how you're feeling.</h3>
+                    <p className="text-red-700 mb-4">Your wellness score is {totalScore}/30, which indicates you may be struggling significantly.</p>
+                  </div>
+                </div>
+                <div className="bg-white rounded-lg p-4 space-y-3">
+                  <p className="font-semibold text-gray-800 mb-2">Please consider reaching out:</p>
+                  <div className="flex items-center text-red-700">
+                    <Phone className="mr-2" size={20} />
+                    <span><strong>988</strong> - Suicide & Crisis Lifeline (US, 24/7)</span>
+                  </div>
+                  <div className="flex items-center text-red-700">
+                    <MessageCircle className="mr-2" size={20} />
+                    <span>Text <strong>"HELLO"</strong> to <strong>741741</strong> for Crisis Text Line</span>
+                  </div>
+                  <div className="flex items-center text-red-700">
+                    <Phone className="mr-2" size={20} />
+                    <span><strong>KIRAN (India)</strong>: 1800-599-0019</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Wellness Score */}
+            <div className={`rounded-xl p-6 mb-6 ${
+              wellnessLevel === 'crisis' ? 'bg-red-100 border-2 border-red-400' :
+              wellnessLevel === 'low' ? 'bg-orange-100 border-2 border-orange-400' :
+              wellnessLevel === 'moderate' ? 'bg-yellow-100 border-2 border-yellow-400' :
+              'bg-green-100 border-2 border-green-400'
+            }`}>
+              <div className="text-center mb-4">
+                <p className="text-6xl font-bold mb-2">{totalScore}<span className="text-3xl text-gray-600">/30</span></p>
+                <p className="text-lg font-semibold text-gray-700">Wellness Score</p>
+              </div>
+              <p className="text-center text-gray-700">
+                {wellnessLevel === 'crisis' && "You may be struggling significantly. Please reach out for support."}
+                {wellnessLevel === 'low' && "It seems like you're going through a tough time. That's okay - hard days happen."}
+                {wellnessLevel === 'moderate' && "You're doing okay overall, but there might be some areas we can improve."}
+                {wellnessLevel === 'high' && "That's great! You're in a good place mentally."}
+              </p>
+            </div>
+
+            {/* Focus Area */}
+            <div className="bg-purple-50 border-2 border-purple-300 rounded-xl p-6 mb-6">
+              <h3 className="text-xl font-bold text-purple-900 mb-3">Main Focus Area</h3>
+              <p className="text-purple-800 text-lg font-semibold mb-4">{concernArea}</p>
+              <div className="space-y-2">
+                <p className="text-purple-800 font-semibold mb-2">Evidence-based strategies:</p>
+                {strategies[concernArea].map((strategy, index) => (
+                  <div key={index} className="bg-white rounded-lg p-3 text-gray-700">
+                    {strategy}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Set a Goal */}
+            {wellnessLevel !== 'crisis' && (
+              <div className="bg-blue-50 border-2 border-blue-300 rounded-xl p-6 mb-6">
+                <h3 className="text-xl font-bold text-blue-900 mb-3">Set a Goal 🎯</h3>
+                <p className="text-blue-800 mb-4">What's ONE small thing you can commit to today?</p>
+                <input 
+                  type="text"
+                  value={copingGoal}
+                  onChange={(e) => setCopingGoal(e.target.value)}
+                  placeholder="e.g., I'll take a 10-minute walk or I'll be in bed by 10:30 PM"
+                  className="w-full px-4 py-3 border-2 border-blue-300 rounded-lg focus:border-blue-500 focus:outline-none mb-3"
+                />
+                {copingGoal && (
+                  <div className="bg-white rounded-lg p-3 mt-3">
+                    <CheckCircle className="inline text-green-600 mr-2" size={20} />
+                    <span className="text-gray-700">Perfect! Your goal: <strong>"{copingGoal}"</strong></span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Summary Stats */}
+            <div className="bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-300 rounded-xl p-6 mb-6">
+              <div className="flex items-center mb-3">
+                <TrendingUp className="text-purple-600 mr-2" size={24} />
+                <h3 className="text-xl font-bold text-gray-800">Your Wellness Summary</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div>
+                  <p className="text-3xl font-bold text-purple-600">{checkInCount}</p>
+                  <p className="text-gray-600 text-sm">Check-ins Completed</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-pink-600">{concernArea}</p>
+                  <p className="text-gray-600 text-sm">Focus Area</p>
+                </div>
+              </div>
+              <p className="text-gray-600 text-sm mt-4 text-center italic">
+                Keep coming back - tracking patterns helps us understand what works for you!
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              <button 
+                onClick={() => {
+                  setStep('welcome');
+                  setResponses({
+                    moodRating: 5,
+                    sleepQuality: 3,
+                    appetiteLevel: 3,
+                    energyLevel: 3,
+                    focusLevel: 3
+                  });
+                  setCopingGoal('');
+                }}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all"
+              >
+                Check In Again Later
+              </button>
+              <p className="text-center text-gray-600 text-sm">
+                Thank you for taking time for yourself today, {userName}. 🌱
+              </p>
+              <p className="text-center text-gray-500 text-sm italic">
+                Remember: Small steps lead to big changes.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center mt-6 text-gray-500 text-xs">
+            <p>⚠️ MindEase is not a substitute for professional mental health care.</p>
+            <p>If you're in crisis, please contact emergency services or a mental health professional.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}

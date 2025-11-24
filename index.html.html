@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 1s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .project-card h2 {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .features li {
+            padding: 8px 0;
+            color: #555;
+            border-bottom: 1px solid #eee;
+        }
+
+        .features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .contact {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .contact h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 25px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-badge {
+            background: #f0f0f0;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👋 Hi, I'm [Your Name]</h1>
+            <p>Full Stack Developer | Building Real-World Applications</p>
+        </header>
+
+        <div class="projects">
+            <!-- MoneyWise Project -->
+            <div class="project-card">
+                <div class="project-icon">💰</div>
+                <h2>MoneyWise</h2>
+                <p>A comprehensive personal finance and budget tracking application that helps users take control of their finances with intelligent insights and recommendations.</p>
+                
+                <ul class="features">
+                    <li>Real-time budget calculation</li>
+                    <li>Financial health scoring system</li>
+                    <li>Expense category tracking</li>
+                    <li>Smart overspending alerts</li>
+                    <li>Personalized money-saving tips</li>
+                    <li>Persistent data storage</li>
+                </ul>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">React</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="#" class="btn">View Live Demo</a>
+                    <a href="#" class="btn btn-secondary">View Code</a>
+                </div>
+            </div>
+
+            <!-- MindEase Project -->
+            <div class="project-card">
+                <div class="project-icon">🌸</div>
+                <h2>MindEase</h2>
+                <p>A mental wellness tracking application that provides evidence-based strategies and helps users monitor their mental health journey with compassionate, data-driven insights.</p>
+                
+                <ul class="features">
+                    <li>Comprehensive wellness assessments</li>
+                    <li>Mental health scoring algorithm</li>
+                    <li>Evidence-based coping strategies</li>
+                    <li>Crisis support resources</li>
+                    <li>Progress tracking over time</li>
+                    <li>Goal setting functionality</li>
+                </ul>
+
+                <div class="tech-stack">
+                    <span class="tech-badge">React</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="#" class="btn">View Live Demo</a>
+                    <a href="#" class="btn btn-secondary">View Code</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact">
+            <h2>Let's Connect</h2>
+            <p>Interested in collaborating or want to know more about my projects?</p>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+                <a href="mailto:your.email@example.com">Email Me</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 [Your Name] | Built with passion and code 💻</p>
+        </footer>
+    </div>
+</body>
+</html>
