@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindEase - Mental Wellness Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom right, #fae8ff, #e9d5ff, #ddd6fe);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin: 20px auto;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .icon {
+            text-align: center;
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9d5ff;
+            border-radius: 12px;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #a855f7;
+        }
+
+        button {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .slider-container {
+            margin: 30px 0;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(to right, #fca5a5, #fde047, #86efac);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #a855f7;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .mood-value {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #a855f7;
+            margin: 20px 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .option-btn:hover {
+            border-color: #a855f7;
+            background: #faf5ff;
+        }
+
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .score-card {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .score-excellent {
+            background: #d1fae5;
+            border: 3px solid #10b981;
+        }
+
+        .score-warning {
+            background: #fef3c7;
+            border: 3px solid #f59e0b;
+        }
+
+        .score-critical {
+            background: #fee2e2;
+            border: 3px solid #ef4444;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .strategies {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .strategy-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #a855f7;
+        }
+
+        .crisis-box {
+            background: #fee2e2;
+            border: 3px solid #ef4444;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .crisis-box h3 {
+            color: #991b1b;
+            margin-bottom: 15px;
+        }
+
+        .hotline {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .disclaimer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen" class="card">
+            <div class="icon">❤️</div>
+            <h1>MindEase 🌸</h1>
+            <p>I'm here to help you check in with yourself and track your mental wellness.</p>
+            <p style="font-style: italic; color: #9ca3af;">This is a safe, judgment-free space.</p>
+            <input type="text" id="nameInput" placeholder="What's your name?">
+            <button onclick="saveName()">Continue</button>
+            <p class="disclaimer">⚠️ This is not a substitute for professional mental health care</p>
+        </div>
+
+        <!-- Intro Screen -->
+        <div id="introScreen" class="card hidden">
+            <h1 id="greeting"></h1>
+            <p id="introText"></p>
+            <button onclick="startAssessment()">Let's Check In</button>
+        </div>
+
+        <!-- Mood Screen -->
+        <div id="moodScreen" class="card hidden">
+            <div class="icon">❤️</div>
+            <h2 style="text-align: center; color: #374151;">How's Your Mood?</h2>
+            <p>On a scale of 1-10, how would you rate your mood today?</p>
+            <div class="slider-container">
+                <div class="mood-value" id="moodValue">5</div>
+                <input type="range" id="moodSlider" min="1" max="10" value="5" oninput="updateMoodValue()">
+                <div style="display: flex; justify-content: space-between; color: #6b7280; margin-top: 10px;">
+                    <span>1 - Very low</span>
+                    <span>10 - Excellent</span>
+                </div>
+            </div>
+            <button onclick="nextQuestion('sleep')">Next</button>
+        </div>
+
+        <!-- Sleep Screen -->
+        <div id="sleepScreen" class="card hidden">
+            <div class="icon">🌙</div>
+            <h2 style="text-align: center; color: #374151;">Sleep Quality</h2>
+            <p>How has your sleep been lately?</p>
+            <div class="options">
+                <button class="option-btn" onclick="saveAnswer('sleep', 1)">
+                    <span class="emoji">😴</span> Very Poor
+                </button>
+                <button class="option-btn" onclick="saveAnswer('sleep', 2)">
+                    <span class="emoji">😕</span> Poor
+                </button>
+                <button class="option-btn" onclick="saveAnswer('sleep', 3)">
+                    <span class="emoji">😐</span> Okay
+                </button>
+                <button class="option-btn" onclick="saveAnswer('sleep', 4)">
+                    <span class="emoji">🙂</span> Good
+                </button>
+                <button class="option-btn" onclick="saveAnswer('sleep', 5)">
+                    <span class="emoji">😊</span> Excellent
+                </button>
+            </div>
+        </div>
+
+        <!-- Appetite Screen -->
+        <div id="appetiteScreen" class="card hidden">
+            <div class="icon">🍽️</div>
+            <h2 style="text-align: center; color: #374151;">Appetite</h2>
+            <p>How's your appetite?</p>
+            <div class="options">
+                <button class="option-btn" onclick="saveAnswer('appetite', 1)">Much lower than usual</button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 2)">A bit lower</button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 3)">Normal</button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 4)">A bit higher</button>
+                <button class="option-btn" onclick="saveAnswer('appetite', 5)">Much higher</button>
+            </div>
+        </div>
+
+        <!-- Energy Screen -->
+        <div id="energyScreen" class="card hidden">
+            <div class="icon">⚡</div>
+            <h2 style="text-align: center; color: #374151;">Energy Level</h2>
+            <p>How's your energy level today?</p>
+            <div class="options">
+                <button class="option-btn" onclick="saveAnswer('energy', 1)">
+                    <span class="emoji">😫</span> Exhausted
+                </button>
+                <button class="option-btn" onclick="saveAnswer('energy', 2)">
+                    <span class="emoji">😔</span> Very low
+                </button>
+                <button class="option-btn" onclick="saveAnswer('energy', 3)">
+                    <span class="emoji">😐</span> Moderate
+                </button>
+                <button class="option-btn" onclick="saveAnswer('energy', 4)">
+                    <span class="emoji">🙂</span> Good
+                </button>
+                <button class="option-btn" onclick="saveAnswer('energy', 5)">
+                    <span class="emoji">⚡</span> High Energy
+                </button>
+            </div>
+        </div>
+
+        <!-- Focus Screen -->
+        <div id="focusScreen" class="card hidden">
+            <div class="icon">🎯</div>
+            <h2 style="text-align: center; color: #374151;">Focus & Concentration</h2>
+            <p>How's your ability to focus?</p>
+            <div class="options">
+                <button class="option-btn" onclick="saveAnswer('focus', 1)">
+                    <span class="emoji">😵</span> Can't concentrate
+                </button>
+                <button class="option-btn" onclick="saveAnswer('focus', 2)">
+                    <span class="emoji">😕</span> Easily distracted
+                </button>
+                <button class="option-btn" onclick="saveAnswer('focus', 3)">
+                    <span class="emoji">😐</span> Somewhat focused
+                </button>
+                <button class="option-btn" onclick="saveAnswer('focus', 4)">
+                    <span class="emoji">🙂</span> Pretty focused
+                </button>
+                <button class="option-btn" onclick="saveAnswer('focus', 5)">
+                    <span class="emoji">🎯</span> Very sharp
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="card hidden">
+            <h1>Your Wellness Report</h1>
+            <div id="resultsContent"></div>
+            <button onclick="resetApp()">Check In Again Later</button>
+            <p style="text-align: center; margin-top: 20px; color: #6b7280;">
+                Thank you for taking time for yourself today. 🌱<br>
+                <em>Remember: Small steps lead to big changes.</em>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let userName = '';
+        let checkInCount = 0;
+        let responses = {
+            mood: 5,
+            sleep: 3,
+            appetite: 3,
+            energy: 3,
+            focus: 3
+        };
+
+        const strategies = {
+            sleep: [
+                '🌙 Set a consistent bedtime and wake time',
+                '📱 Put screens away 30-60 minutes before bed',
+                '🧘 Try progressive muscle relaxation',
+                '☕ Avoid caffeine after 2 PM',
+                '🛏️ Keep bedroom cool, dark, and quiet'
+            ],
+            energy: [
+                '🚶 Take a 10-minute walk outside',
+                '💧 Drink a glass of water',
+                '🍎 Eat a balanced snack with protein',
+                '☀️ Get 15 minutes of sunlight',
+                '🎵 Listen to upbeat music'
+            ],
+            focus: [
+                '⏰ Use Pomodoro Technique (25 min work, 5 min break)',
+                '📝 Write a to-do list with 3 priorities',
+                '🎧 Try instrumental music or white noise',
+                '🧘 Do 5 minutes of mindful breathing',
+                '💻 Close unnecessary tabs and apps'
+            ],
+            general: [
+                '📓 Keep a gratitude journal',
+                '🤝 Connect with a friend',
+                '🎨 Engage in a creative hobby',
+                '🏃 Move your body',
+                '😌 Practice self-compassion'
+            ]
+        };
+
+        function saveName() {
+            userName = document.getElementById('nameInput').value.trim();
+            if (!userName) {
+                alert('Please enter your name');
+                return;
+            }
+
+            const saved = localStorage.getItem('mindease-user');
+            if (saved) {
+                const data = JSON.parse(saved);
+                checkInCount = data.checkInCount || 0;
+            }
+
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('introScreen').classList.remove('hidden');
+            
+            if (checkInCount > 0) {
+                document.getElementById('greeting').textContent = `Welcome back, ${userName}! 😊`;
+                document.getElementById('introText').textContent = `This is check-in #${checkInCount + 1}. I'm glad you're here. Let's see how you're feeling today.`;
+            } else {
+                document.getElementById('greeting').textContent = `Nice to meet you, ${userName}!`;
+                document.getElementById('introText').textContent = "I'll ask you a few quick questions about how you're feeling. It takes about 2 minutes.";
+            }
+        }
+
+        function startAssessment() {
+            document.getElementById('introScreen').classList.add('hidden');
+            document.getElementById('moodScreen').classList.remove('hidden');
+        }
+
+        function updateMoodValue() {
+            const value = document.getElementById('moodSlider').value;
+            document.getElementById('moodValue').textContent = value;
+            responses.mood = parseInt(value);
+        }
+
+        function nextQuestion(screen) {
+            document.getElementById('moodScreen').classList.add('hidden');
+            document.getElementById(screen + 'Screen').classList.remove('hidden');
+        }
+
+        function saveAnswer(type, value) {
+            responses[type] = value;
+            
+            const screens = ['sleep', 'appetite', 'energy', 'focus'];
+            const currentIndex = screens.indexOf(type);
+            
+            document.getElementById(type + 'Screen').classList.add('hidden');
+            
+            if (currentIndex < screens.length - 1) {
+                document.getElementById(screens[currentIndex + 1] + 'Screen').classList.remove('hidden');
+            } else {
+                calculateResults();
+            }
+        }
+
+        function calculateResults() {
+            const totalScore = responses.mood + responses.sleep + responses.appetite + responses.energy + responses.focus;
+            
+            checkInCount++;
+            localStorage.setItem('mindease-user', JSON.stringify({ userName, checkInCount }));
+
+            let wellnessLevel, statusClass, statusText;
+            if (totalScore < 10) {
+                wellnessLevel = 'crisis';
+                statusClass = 'score-critical';
+                statusText = '🚨 CRITICAL';
+            } else if (totalScore <= 15) {
+                wellnessLevel = 'low';
+                statusClass = 'score-critical';
+                statusText = '⚠️ LOW';
+            } else if (totalScore <= 22) {
+                wellnessLevel = 'moderate';
+                statusClass = 'score-warning';
+                statusText = '⚠️ NEEDS ATTENTION';
+            } else {
+                wellnessLevel = 'high';
+                statusClass = 'score-excellent';
+                statusText = '✅ EXCELLENT';
+            }
+
+            let concernArea = 'general';
+            if (responses.sleep < 3) concernArea = 'sleep';
+            else if (responses.energy < 3) concernArea = 'energy';
+            else if (responses.focus < 3) concernArea = 'focus';
+
+            let html = '';
+
+            if (wellnessLevel === 'crisis') {
+                html += `
+                    <div class="crisis-box">
+                        <h3>${userName}, I'm concerned about how you're feeling.</h3>
+                        <p>Your wellness score is ${totalScore}/30, which indicates you may be struggling significantly.</p>
+                        <h4 style="margin-top: 15px; color: #991b1b;">Please consider reaching out:</h4>
+                        <div class="hotline">📞 988 - Suicide & Crisis Lifeline (US, 24/7)</div>
+                        <div class="hotline">💬 Text "HELLO" to 741741 for Crisis Text Line</div>
+                        <div class="hotline">📞 KIRAN (India): 1800-599-0019</div>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="score-card ${statusClass}">
+                    <div class="score-number">${totalScore}<span style="font-size: 2rem;">/30</span></div>
+                    <div style="font-size: 1.3rem; font-weight: 600;">${statusText}</div>
+                    <p style="margin-top: 10px;">
+                        ${wellnessLevel === 'crisis' ? 'You may be struggling significantly. Please reach out for support.' :
+                          wellnessLevel === 'low' ? "It seems like you're going through a tough time. That's okay - hard days happen." :
+                          wellnessLevel === 'moderate' ? "You're doing okay overall, but there might be some areas we can improve." :
+                          "That's great! You're in a good place mentally."}
+                    </p>
+                </div>
+
+                <div class="strategies">
+                    <h3 style="color: #a855f7; margin-bottom: 15px;">Evidence-Based Strategies</h3>
+                    <p style="font-weight: 600; margin-bottom: 10px;">Main Focus: ${concernArea === 'sleep' ? 'Sleep Issues' : concernArea === 'energy' ? 'Low Energy' : concernArea === 'focus' ? 'Lack of Focus' : 'General Wellness'}</p>
+                    ${strategies[concernArea].map(s => `<div class="strategy-item">${s}</div>`).join('')}
+                </div>
+
+                <div style="text-align: center; background: #f3e8ff; padding: 20px; border-radius: 12px; margin: 20px 0;">
+                    <h3 style="color: #a855f7;">📊 Your Progress</h3>
+                    <p style="font-size: 2rem; font-weight: bold; color: #a855f7; margin: 10px 0;">${checkInCount}</p>
+                    <p style="color: #6b7280;">Check-ins Completed</p>
+                    <p style="margin-top: 10px; color: #6b7280; font-style: italic; font-size: 0.9rem;">
+                        Keep coming back - tracking patterns helps us understand what works for you!
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('resultsScreen').classList.remove('hidden');
+        }
+
+        function resetApp() {
+            responses = { mood: 5, sleep: 3, appetite: 3, energy: 3, focus: 3 };
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+            document.getElementById('nameInput').value = '';
+            document.getElementById('moodSlider').value = 5;
+            document.getElementById('moodValue').textContent = '5';
+        }
+    </script>
+</body>
+</html>
