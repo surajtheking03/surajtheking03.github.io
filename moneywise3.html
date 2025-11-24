@@ -246,18 +246,15 @@
         }
 
         .action-btn {
-    padding: 20px;
-    background: #f9fafb;
-    border: 2px solid #10b981;
-    border-radius: 12px;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 600;
-    transition: all 0.3s;
-    color: #1f2937;
-    font-size: 18px;
-    line-height: 1.8;
-}
+            padding: 20px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
 
         .action-btn:hover {
             border-color: #10b981;
@@ -308,24 +305,21 @@
         <div id="expensesScreen" class="card hidden">
             <h1>📊 Budget Tracker</h1>
             
-            <div class="summary-grid">
-    <div class="summary-item">
-        <p>Monthly Income</p>
-        <h3 id="displayIncome">$0</h3>
-    </div>
-    <div class="summary-item">
-        <p>Total Expenses</p>
-        <h3 id="displayExpenses">$0</h3>
-    </div>
-    <div class="summary-item">
-        <p>After Expenses</p>
-        <h3 id="displayAfterExpenses">$0</h3>
-    </div>
-</div>
-<div style="text-align: center; margin-top: 15px; padding: 15px; background: #f0fdf4; border-radius: 10px;">
-    <p style="margin: 0; color: #059669;">💰 Savings Goal: <strong id="displaySavings">$0</strong></p>
-    <p style="margin: 5px 0 0 0; color: #374151;">Final Remaining: <strong id="displayRemaining" style="color: #10b981;">$0</strong></p>
-</div>
+            <div class="summary">
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <p>Monthly Income</p>
+                        <h3 id="displayIncome">$0</h3>
+                    </div>
+                    <div class="summary-item">
+                        <p>Total Expenses</p>
+                        <h3 id="displayExpenses">$0</h3>
+                    </div>
+                    <div class="summary-item">
+                        <p>Remaining</p>
+                        <h3 id="displayRemaining">$0</h3>
+                    </div>
+                </div>
             </div>
 
             <p style="text-align: center; color: #6b7280; margin-bottom: 20px;">Which categories would you like to add?</p>
@@ -378,17 +372,11 @@
             <div class="divider"></div>
             
             <h2>What would you like to do?</h2>
-<div class="action-menu">
-    <button class="action-btn" onclick="adjustBudget()">
-        📊<br><strong>Adjust Budget</strong>
-    </button>
-    <button class="action-btn" onclick="viewTips()">
-        💡<br><strong>Get Money-Saving Tips</strong>
-    </button>
-    <button class="action-btn" onclick="resetApp()">
-        🔄<br><strong>Start New Budget</strong>
-    </button>
-</div>
+            <div class="action-menu">
+                <button class="action-btn" onclick="adjustBudget()">📊 Adjust Budget</button>
+                <button class="action-btn" onclick="viewTips()">💡 Get Money-Saving Tips</button>
+                <button class="action-btn" onclick="resetApp()">🔄 Start New Budget</button>
+            </div>
         </div>
 
         <!-- Tips Screen -->
@@ -447,25 +435,22 @@
         }
 
         function updateTotals() {
-    const rent = parseFloat(document.getElementById('rent').value) || 0;
-    const food = parseFloat(document.getElementById('food').value) || 0;
-    const transport = parseFloat(document.getElementById('transport').value) || 0;
-    const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
-    const utilities = parseFloat(document.getElementById('utilities').value) || 0;
-    const savings = parseFloat(document.getElementById('savings').value) || 0;
-    const others = parseFloat(document.getElementById('others').value) || 0;
+            const rent = parseFloat(document.getElementById('rent').value) || 0;
+            const food = parseFloat(document.getElementById('food').value) || 0;
+            const transport = parseFloat(document.getElementById('transport').value) || 0;
+            const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
+            const utilities = parseFloat(document.getElementById('utilities').value) || 0;
+            const savings = parseFloat(document.getElementById('savings').value) || 0;
+            const others = parseFloat(document.getElementById('others').value) || 0;
 
-    const actualExpenses = expenses.rent + expenses.food + expenses.transport + 
-                       expenses.entertainment + expenses.utilities + expenses.others;
-const savingsGoal = expenses.savings;
-const remaining = income - actualExpenses;
-const finalRemaining = remaining - savingsGoal;
+            const totalExpenses = rent + food + transport + entertainment + utilities + savings + others;
+            const remaining = income - totalExpenses;
 
-           document.getElementById('displayAfterExpenses').textContent = '$' + remaining.toFixed(2);
-    document.getElementById('displaySavings').textContent = '$' + savings.toFixed(2);
-    
-    const remainingEl = document.getElementById('displayRemaining');
-    remainingEl.style.color = finalRemaining >= 0 ? '#10b981' : '#ef4444';
+            document.getElementById('displayExpenses').textContent = '$' + totalExpenses.toFixed(2);
+            document.getElementById('displayRemaining').textContent = '$' + remaining.toFixed(2);
+            
+            const remainingEl = document.getElementById('displayRemaining');
+            remainingEl.style.color = remaining >= 0 ? '#10b981' : '#ef4444';
         }
 
         function calculateBudget() {
@@ -509,11 +494,10 @@ const finalRemaining = remaining - savingsGoal;
             });
 
             // Calculate financial health score
-let score = 100;
-if (finalRemaining < 0) score -= 30;
-if (percentages.rent > 40) score -= 15;
-if (percentages.savings < 10) score -= 20;
-if (savingsGoal > remaining) score -= 25; // Trying to save more than available!
+            let score = 100;
+            if (remaining < 0) score -= 30;
+            if (percentages.rent > 40) score -= 15;
+            if (percentages.savings < 10) score -= 20;
 
             let status = 'Healthy';
             let statusEmoji = '✅';
@@ -548,37 +532,22 @@ if (savingsGoal > remaining) score -= 25; // Trying to save more than available!
 
                 <h2>📊 Financial Overview</h2>
                 <div class="summary">
-    <div class="summary-grid">
-        <div>
-            <p>Monthly Income</p>
-            <h3>$${income.toFixed(2)}</h3>
-        </div>
-        <div>
-            <p>Total Expenses</p>
-            <h3>$${actualExpenses.toFixed(2)}</h3>
-        </div>
-        <div>
-            <p>After Expenses</p>
-            <h3 style="color: #10b981">$${remaining.toFixed(2)}</h3>
-        </div>
-    </div>
-    <div style="text-align: center; margin-top: 15px; padding: 15px; background: #f0fdf4; border-radius: 10px;">
-        <p style="color: #059669; font-size: 1.1rem; margin: 5px 0;">💰 Savings Goal: <strong>$${savingsGoal.toFixed(2)}</strong> (${percentages.savings}%)</p>
-        <p style="color: #374151; font-size: 1.1rem; margin: 5px 0;">Final Remaining: <strong style="color: ${finalRemaining >= 0 ? '#10b981' : '#ef4444'}">$${finalRemaining.toFixed(2)}</strong></p>
-    </div>
-</div>
+                    <div class="summary-grid">
+                        <div>
+                            <p>Monthly Income</p>
+                            <h3>$${income.toFixed(2)}</h3>
+                        </div>
+                        <div>
+                            <p>Total Expenses</p>
+                            <h3>$${totalExpenses.toFixed(2)}</h3>
+                        </div>
+                        <div>
+                            <p>Remaining Budget</p>
+                            <h3 style="color: ${remaining >= 0 ? '#10b981' : '#ef4444'}">$${remaining.toFixed(2)}</h3>
+                        </div>
+                    </div>
+                </div>
             `;
-
-            // Impossible savings warning
-if (savingsGoal > remaining) {
-    html += `
-        <div class="alert">
-            ⚠️ SAVINGS ALERT!<br>
-            You're trying to save <strong>$${savingsGoal.toFixed(2)}</strong> but only have <strong>$${remaining.toFixed(2)}</strong> left after expenses!<br>
-            You need to either reduce expenses or lower your savings goal.
-        </div>
-    `;
-}
 
             // Overspending alert
             if (remaining < 0) {
@@ -732,8 +701,3 @@ if (savingsGoal > remaining) {
     </script>
 </body>
 </html>
-
-
-
-
-
