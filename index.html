@@ -210,6 +210,76 @@
             font-weight: 600;
         }
 
+        /* ===== Other Works Section ===== */
+
+        .other-works {
+            margin-top: 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 35px 25px;
+            color: #ffffff;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+            animation: fadeIn 0.8s;
+        }
+
+        .other-works h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .other-works p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .other-grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .other-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px 20px;
+            color: #444;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .other-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+        }
+
+        .other-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #764ba2;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .other-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        .other-card p {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .other-card .btn {
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            margin-top: 0;
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2rem;
@@ -222,15 +292,19 @@
             .projects {
                 grid-template-columns: 1fr;
             }
+
+            .other-works {
+                padding: 25px 18px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>👋 Hi, I'm Suraj! </h1>
-            <p>Welcome to my portfolio! I'm passionate about building applications that solve real problems.</p>
-            <p>Check out these two projects I built using AI-powered tools including ChatGPT, Voiceflow and Claude AI!</p>
+            <!-- You can tweak this name line to whatever you prefer -->
+            <h1>👋 Hi, I'm Suraj</h1>
+            <p>Full Stack Developer | Building Real-World Applications & Agentic AI Workflows</p>
         </header>
 
         <div class="projects">
@@ -256,9 +330,9 @@
                 </div>
 
                 <div style="margin-top: 20px;">
-                        <a href="https://surajtheking03.github.io/moneywise3.html" class="btn">View Live Demo</a>
-    <a href="https://github.com/surajtheking03/surajtheking03.github.io/blob/main/moneywise3.html" class="btn btn-secondary">View Code</a>
-
+                    <!-- TODO: update these with your actual live demo / repo links -->
+                    <a href="#" class="btn" target="_blank">View Live Demo</a>
+                    <a href="#" class="btn btn-secondary" target="_blank">View Code</a>
                 </div>
             </div>
 
@@ -284,25 +358,77 @@
                 </div>
 
                 <div style="margin-top: 20px;">
-                        <a href="https://surajtheking03.github.io/mindease2.html" class="btn">View Live Demo</a>
-    <a href="https://github.com/surajtheking03/surajtheking03.github.io/blob/main/mindease2.html" class="btn btn-secondary">View Code</a>
-
+                    <!-- TODO: update these with your actual live demo / repo links -->
+                    <a href="#" class="btn" target="_blank">View Live Demo</a>
+                    <a href="#" class="btn btn-secondary" target="_blank">View Code</a>
                 </div>
             </div>
         </div>
+
+        <!-- ===== New Section: Check My Other Works ===== -->
+        <section class="other-works">
+            <h2>🔧 Check My Other Works</h2>
+            <p>Beyond these flagship apps, I’ve been experimenting with agentic AI workflows, n8n automations, and other practical tools. Here are some of them:</p>
+            
+            <div class="other-grid">
+                <!-- Card 1 -->
+                <div class="other-card">
+                    <div class="other-tag">Agentic AI · n8n</div>
+                    <h3>Railway Schedule Bot</h3>
+                    <p>A webhook-based agent in n8n that uses LLMs and dynamic inputs to answer railway schedule queries in real time.</p>
+                    <!-- TODO: replace href with the real repo URL -->
+                    <a href="https://github.com/surajtheking03" class="btn" target="_blank">
+                        View Repo
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="other-card">
+                    <div class="other-tag">Agentic AI · Webhooks</div>
+                    <h3>Basic Webhook Agent</h3>
+                    <p>A starter agent workflow that receives user input via webhook, processes it with an LLM, and returns a clean response.</p>
+                    <!-- TODO: replace href with the real repo URL -->
+                    <a href="https://github.com/surajtheking03" class="btn" target="_blank">
+                        View Repo
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="other-card">
+                    <div class="other-tag">Solar · NASA + Open-Meteo</div>
+                    <h3>Solar Forecast Assistant</h3>
+                    <p>“Agent Jaanu” powered solar intelligence API that combines NASA POWER and Open-Meteo to score daily solar potential.</p>
+                    <!-- TODO: replace href with the real repo URL -->
+                    <a href="https://github.com/surajtheking03" class="btn" target="_blank">
+                        View Repo
+                    </a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="other-card">
+                    <div class="other-tag">Portfolio · Experiments</div>
+                    <h3>More on GitHub</h3>
+                    <p>Explore all my experiments, learning projects, and agentic AI workflows directly on my GitHub profile.</p>
+                    <a href="https://github.com/surajtheking03" class="btn" target="_blank">
+                        View GitHub Profile
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <div class="contact">
             <h2>Let's Connect</h2>
             <p>Interested in collaborating or want to know more about my projects?</p>
             <div class="social-links">
-    <a href="https://github.com/surajtheking03" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/in/suraj-b-89b907a8/" target="_blank">LinkedIn</a>
-    <a href="mailto:surajdema04@gmail.com">Email Me</a>
+                <!-- Updated GitHub link; feel free to update LinkedIn & Email -->
+                <a href="https://github.com/surajtheking03" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+                <a href="mailto:your.email@example.com">Email Me</a>
             </div>
         </div>
 
         <footer>
-            <p>© Suraj | Built with passion and code 💻</p>
+            <p>© 2024 Suraj | Built with passion and code 💻</p>
         </footer>
     </div>
 </body>
