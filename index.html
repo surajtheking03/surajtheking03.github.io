@@ -1,435 +1,834 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio - Developer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Suraj B — Portfolio</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
+  <!-- Optional Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #02081b;
+      --card: #020617;
+      --card-soft: #0b1120;
+      --accent: #38bdf8;
+      --accent-soft: #1d4ed8;
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.8);
+      --radius-xl: 22px;
+    }
 
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            color: white;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            animation: fadeInDown 1s;
-        }
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0f172a, #020617 55%);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
 
-        header p {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s;
-        }
+    .page-shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
 
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
+    /* NAVBAR */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
 
-        .project-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeIn 1s;
-        }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-        }
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: white;
+      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.5);
+    }
 
-        .project-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
+    .nav-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-soft);
+    }
 
-        .project-card h2 {
-            font-size: 1.8rem;
-            color: #667eea;
-            margin-bottom: 15px;
-        }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.9rem;
+    }
 
-        .project-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
 
-        .features {
-            list-style: none;
-            margin-bottom: 20px;
-        }
+    .nav-links a:hover {
+      background: rgba(15, 118, 110, 0.08);
+      color: var(--text-main);
+    }
 
-        .features li {
-            padding: 8px 0;
-            color: #555;
-            border-bottom: 1px solid #eee;
-        }
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 28px;
+      margin-bottom: 32px;
+      align-items: center;
+    }
 
-        .features li:before {
-            content: "✓ ";
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 8px;
-        }
+    .hero-main {
+      padding: 24px 22px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, #1d4ed8 0, #020617 45%);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: var(--shadow-soft);
+    }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s;
-            margin-right: 10px;
-            margin-top: 10px;
-        }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.7);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
+    .hero-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
+    .hero-title {
+      font-size: 2rem;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
 
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: white;
-            margin-top: 60px;
-        }
+    .hero-title span {
+      color: var(--accent);
+    }
 
-        .contact {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-soft);
+      max-width: 36rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
 
-        .contact h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-        }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
 
-        .social-links {
-            margin-top: 20px;
-        }
+    .hero-tag {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-soft);
+    }
 
-        .social-links a {
-            display: inline-block;
-            margin: 0 10px;
-            padding: 10px 25px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 20px;
-            transition: all 0.3s;
-        }
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        .social-links a:hover {
-            background: #764ba2;
-            transform: scale(1.1);
-        }
+    .btn-primary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.2s;
+      white-space: nowrap;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .btn-primary {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: white;
+      box-shadow: 0 16px 40px rgba(79, 70, 229, 0.7);
+    }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 50px rgba(79, 70, 229, 0.9);
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--text-soft);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
 
-        .tech-badge {
-            background: #f0f0f0;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            color: #667eea;
-            font-weight: 600;
-        }
+    .hero-side {
+      padding: 20px 18px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top, #0f172a, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
 
-        /* ===== Other Works Section ===== */
+    .hero-side-title {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
 
-        .other-works {
-            margin-top: 60px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 35px 25px;
-            color: #ffffff;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-            animation: fadeIn 0.8s;
-        }
+    .hero-side-highlight {
+      font-size: 1.02rem;
+      color: var(--text-main);
+    }
 
-        .other-works h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
+    .hero-side-list {
+      list-style: none;
+      margin-top: 6px;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+    }
 
-        .other-works p {
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
+    .hero-side-list li {
+      margin-bottom: 4px;
+    }
 
-        .other-grid {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
-        }
+    .hero-side-footer {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      opacity: 0.9;
+    }
 
-        .other-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 18px 20px;
-            color: #444;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            transition: transform 0.25s, box-shadow 0.25s;
-        }
+    /* SECTION TITLES */
+    .section {
+      margin-top: 34px;
+    }
 
-        .other-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.25);
-        }
+    .section-header {
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+    }
 
-        .other-tag {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #764ba2;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
 
-        .other-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: #667eea;
-        }
+    .section-sub {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
 
-        .other-card p {
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            color: #555;
-        }
+    /* FEATURED PROJECTS */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
 
-        .other-card .btn {
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            margin-top: 0;
-        }
+    .project-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, #0b1120, #020617);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            header p {
-                font-size: 1rem;
-            }
+    .project-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-            .projects {
-                grid-template-columns: 1fr;
-            }
+    .project-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top, #38bdf8, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
 
-            .other-works {
-                padding: 25px 18px;
-            }
-        }
-    </style>
+    .project-name {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .project-tagline {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+    }
+
+    .project-body {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .project-list {
+      margin-top: 6px;
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+
+    .project-list li {
+      margin-bottom: 3px;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .project-list li::before {
+      content: "•";
+      position: absolute;
+      left: 3px;
+      color: var(--accent);
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tech-pill {
+      font-size: 0.7rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-soft);
+    }
+
+    .project-actions {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-mini {
+      font-size: 0.78rem;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-soft);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.16s ease;
+    }
+
+    .btn-mini:hover {
+      background: rgba(15, 23, 42, 1);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* OTHER WORKS */
+    .other-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .other-card {
+      border-radius: 18px;
+      background: linear-gradient(
+        145deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.8)
+      );
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 14px 14px 14px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .other-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a5b4fc;
+    }
+
+    .other-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .other-body {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .other-footer {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .other-meta {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    /* CONTACT */
+    .contact {
+      margin-top: 34px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top left, #020617, #020617);
+      padding: 22px 20px;
+      text-align: center;
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.9);
+    }
+
+    .contact h2 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .contact p {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin-bottom: 14px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      font-size: 0.82rem;
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+
+    .contact-links a:hover {
+      background: rgba(15, 23, 42, 1);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    footer {
+      margin-top: 26px;
+      font-size: 0.78rem;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-main {
+        order: 1;
+      }
+
+      .hero-side {
+        order: 2;
+      }
+
+      .project-grid,
+      .other-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .page-shell {
+        padding-inline: 14px;
+      }
+      .hero-main {
+        padding-inline: 18px;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-primary,
+      .btn-ghost {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <!-- You can tweak this name line to whatever you prefer -->
-            <h1>👋 Hi, I'm Suraj</h1>
-            <p>Full Stack Developer | Building Real-World Applications & Agentic AI Workflows</p>
-        </header>
+  <div class="page-shell">
+    <!-- NAVBAR -->
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="nav-logo">SB</div>
+        <div class="nav-title">Suraj · Portfolio</div>
+      </div>
+      <div class="nav-links">
+        <a href="#featured">Apps</a>
+        <a href="#agents">Agentic AI</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
 
-        <div class="projects">
-            <!-- MoneyWise Project -->
-            <div class="project-card">
-                <div class="project-icon">💰</div>
-                <h2>MoneyWise</h2>
-                <p>A comprehensive personal finance and budget tracking application that helps users take control of their finances with intelligent insights and recommendations.</p>
-                
-                <ul class="features">
-                    <li>Real-time budget calculation</li>
-                    <li>Financial health scoring system</li>
-                    <li>Expense category tracking</li>
-                    <li>Smart overspending alerts</li>
-                    <li>Personalized money-saving tips</li>
-                    <li>Persistent data storage</li>
-                </ul>
-
-                <div class="tech-stack">
-                    <span class="tech-badge">React</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">Tailwind CSS</span>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <!-- TODO: update these with your actual live demo / repo links -->
-                    <a href="#" class="btn" target="_blank">View Live Demo</a>
-                    <a href="#" class="btn btn-secondary" target="_blank">View Code</a>
-                </div>
-            </div>
-
-            <!-- MindEase Project -->
-            <div class="project-card">
-                <div class="project-icon">🌸</div>
-                <h2>MindEase</h2>
-                <p>A mental wellness tracking application that provides evidence-based strategies and helps users monitor their mental health journey with compassionate, data-driven insights.</p>
-                
-                <ul class="features">
-                    <li>Comprehensive wellness assessments</li>
-                    <li>Mental health scoring algorithm</li>
-                    <li>Evidence-based coping strategies</li>
-                    <li>Crisis support resources</li>
-                    <li>Progress tracking over time</li>
-                    <li>Goal setting functionality</li>
-                </ul>
-
-                <div class="tech-stack">
-                    <span class="tech-badge">React</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">Tailwind CSS</span>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <!-- TODO: update these with your actual live demo / repo links -->
-                    <a href="#" class="btn" target="_blank">View Live Demo</a>
-                    <a href="#" class="btn btn-secondary" target="_blank">View Code</a>
-                </div>
-            </div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-main">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          <span>Currently building with n8n, agents & LLMs</span>
         </div>
-
-        <!-- ===== New Section: Check My Other Works ===== -->
-        <section class="other-works">
-            <h2>🔧 Check My Other Works</h2>
-            <p>Beyond these flagship apps, I’ve been experimenting with agentic AI workflows, n8n automations, and other practical tools. Here are some of them:</p>
-            
-            <div class="other-grid">
-                <!-- Card 1 -->
-                <div class="other-card">
-                    <div class="other-tag">Agentic AI · n8n</div>
-                    <h3>Railway Schedule Bot</h3>
-                    <p>A webhook-based agent in n8n that uses LLMs and dynamic inputs to answer railway schedule queries in real time.</p>
-                    <!-- TODO: replace href with the real repo URL -->
-                    <a href="https://github.com/surajtheking03/agentic-ai-n8n-workflow-railway-schedule-bot-simple" class="btn" target="_blank">
-                        View Repo
-                    </a>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="other-card">
-                    <div class="other-tag">Agentic AI · Webhooks. n8n</div>
-                    <h3>Basic Webhook Agent</h3>
-                    <p>A starter agent workflow that receives user input via webhook, processes it with an LLM, and returns a clean response.</p>
-                    <!-- TODO: replace href with the real repo URL -->
-                    <a href="https://github.com/surajtheking03/agentic-ai-basic-webhook-task2" class="btn" target="_blank">
-                        View Repo
-                    </a>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="other-card">
-                    <div class="other-tag">Solar · NASA + Open-Meteo. n8n</div>
-                    <h3>Solar Forecast Assistant</h3>
-                    <p>“Agent Jaanu” powered solar intelligence API that combines NASA POWER and Open-Meteo to score daily solar potential.</p>
-                    <!-- TODO: replace href with the real repo URL -->
-                    <a href="https://github.com/surajtheking03/SOLAR-FORECAST-ASSISTANT" class="btn" target="_blank">
-                        View Repo
-                    </a>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="other-card">
-                    <div class="other-tag">Portfolio · Experiments</div>
-                    <h3>More on GitHub</h3>
-                    <p>Explore all my experiments, learning projects, and agentic AI workflows directly on my GitHub profile.</p>
-                    <a href="https://github.com/surajtheking03" class="btn" target="_blank">
-                        View GitHub Profile
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <div class="contact">
-            <h2>Let's Connect</h2>
-            <p>Interested in collaborating or want to know more about my projects?</p>
-            <div class="social-links">
-                <!-- Updated GitHub link; feel free to update LinkedIn & Email -->
-                <a href="https://github.com/surajtheking03" target="_blank">GitHub</a>
-                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
-                <a href="mailto:your.email@example.com">Email Me</a>
-            </div>
+        <h1 class="hero-title">
+          Suraj's <span>Portfolio</span> — I build practical apps & AI workflows.
+        </h1>
+        <p class="hero-subtitle">
+          I love taking real-world use cases and turning them into working
+          products — from personal finance and mental wellness apps to
+          agentic AI flows in n8n that actually run in the wild.
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag">Full Stack Learner</span>
+          <span class="hero-tag">Agentic AI</span>
+          <span class="hero-tag">n8n · Workflows</span>
+          <span class="hero-tag">LLM Integrations</span>
         </div>
+        <div class="hero-actions">
+          <a href="#featured" class="btn-primary">
+            View featured apps →
+          </a>
+          <a href="#agents" class="btn-ghost">
+            Explore Agentic AI work
+          </a>
+        </div>
+      </div>
 
-        <footer>
-            <p>© 2024 Suraj | Built with passion and code 💻</p>
-        </footer>
-    </div>
+      <aside class="hero-side">
+        <div>
+          <div class="hero-side-title">Snapshot</div>
+          <p class="hero-side-highlight">
+            From UI to automation, I enjoy building end-to-end solutions that
+            feel simple on the surface and smart under the hood.
+          </p>
+        </div>
+        <ul class="hero-side-list">
+          <li>MoneyWise — AI-assisted personal finance app</li>
+          <li>MindEase — mental wellness companion</li>
+          <li>Railway Bot, Webhook Agents, Solar Forecast Assistant</li>
+        </ul>
+        <p class="hero-side-footer">
+          This page is a small snapshot of what I’m tinkering with. New
+          experiments arrive often. 🙂
+        </p>
+      </aside>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section id="featured" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Featured Applications</h2>
+        <p class="section-sub">
+          Flagship projects built using React, Tailwind, and AI-powered
+          thinking.
+        </p>
+      </div>
+
+      <div class="project-grid">
+        <!-- MoneyWise -->
+        <article class="project-card">
+          <header class="project-header">
+            <div class="project-icon">💰</div>
+            <div>
+              <div class="project-name">MoneyWise</div>
+              <div class="project-tagline">
+                Personal finance companion to keep your money in check.
+              </div>
+            </div>
+          </header>
+          <p class="project-body">
+            MoneyWise helps users track budgets, understand spending patterns,
+            and get clear signals when they’re drifting off-plan — without
+            making finance feel scary.
+          </p>
+          <ul class="project-list">
+            <li>Real-time budget & expense overview</li>
+            <li>Financial health scoring system</li>
+            <li>Smart alerts for overspending</li>
+            <li>Persistent local storage</li>
+          </ul>
+          <div class="project-tech">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">Tailwind CSS</span>
+          </div>
+          <div class="project-actions">
+            <!-- TODO: plug in real URLs when ready -->
+            <a href="#" class="btn-mini" target="_blank">View Live Demo</a>
+            <a
+              href="#"
+              class="btn-mini"
+              target="_blank"
+            >
+              View Code
+            </a>
+          </div>
+        </article>
+
+        <!-- MindEase -->
+        <article class="project-card">
+          <header class="project-header">
+            <div class="project-icon">🌸</div>
+            <div>
+              <div class="project-name">MindEase</div>
+              <div class="project-tagline">
+                A gentle mental wellness tracker with structured support.
+              </div>
+            </div>
+          </header>
+          <p class="project-body">
+            MindEase focuses on emotional check-ins, progress tracking and
+            evidence-based strategies, giving users a space to reflect on
+            their mental health over time.
+          </p>
+          <ul class="project-list">
+            <li>Wellness assessment & scoring</li>
+            <li>Evidence-based coping strategies</li>
+            <li>Goal tracking over time</li>
+            <li>Crisis support resource links</li>
+          </ul>
+          <div class="project-tech">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">Tailwind CSS</span>
+          </div>
+          <div class="project-actions">
+            <!-- TODO: plug in real URLs when ready -->
+            <a href="#" class="btn-mini" target="_blank">View Live Demo</a>
+            <a
+              href="#"
+              class="btn-mini"
+              target="_blank"
+            >
+              View Code
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- AGENTIC AI & WORKFLOWS -->
+    <section id="agents" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Agentic AI & Automations</h2>
+        <p class="section-sub">
+          n8n workflows, webhooks and LLM-powered agents that run behind the
+          scenes.
+        </p>
+      </div>
+
+      <div class="other-grid">
+        <!-- Gemini Workflow -->
+        <article class="other-card">
+          <div class="other-label">Agentic AI · Gemini · n8n</div>
+          <div class="other-title">Gemini Agent Workflow</div>
+          <p class="other-body">
+            My first working agent in n8n, orchestrating prompts, context, and
+            responses via Google Gemini. A solid base for more complex agent
+            chains.
+          </p>
+          <div class="other-footer">
+            <div class="other-meta">Workflow · JSON · Docs</div>
+            <a
+              class="btn-mini"
+              href="https://github.com/surajtheking03/agentic-ai-n8n-workflow-gemini"
+              target="_blank"
+            >
+              View Repo
+            </a>
+          </div>
+        </article>
+
+        <!-- Basic Webhook Agent -->
+        <article class="other-card">
+          <div class="other-label">Webhook · Conversational</div>
+          <div class="other-title">Basic Webhook Agent</div>
+          <p class="other-body">
+            A starter conversational agent that receives user input via webhook,
+            hits an LLM, and returns structured JSON responses you can plug into
+            any front-end or tool.
+          </p>
+          <div class="other-footer">
+            <div class="other-meta">Agent · n8n · JSON</div>
+            <a
+              class="btn-mini"
+              href="https://github.com/surajtheking03/agentic-ai-basic-webhook-task2"
+              target="_blank"
+            >
+              View Repo
+            </a>
+          </div>
+        </article>
+
+        <!-- Railway Schedule Bot -->
+        <article class="other-card">
+          <div class="other-label">n8n · Micro-Agent</div>
+          <div class="other-title">Railway Schedule Bot</div>
+          <p class="other-body">
+            A tiny but fully working schedule bot with a few train entries,
+            built as part of my agentic AI learning path. Great example of a
+            vertical, focused agent.
+          </p>
+          <div class="other-footer">
+            <div class="other-meta">Scheduling · Demo</div>
+            <a
+              class="btn-mini"
+              href="https://github.com/surajtheking03/agentic-ai-n8n-workflow-railway-schedule-bot-simple"
+              target="_blank"
+            >
+              View Repo
+            </a>
+          </div>
+        </article>
+
+        <!-- Solar Forecast Assistant -->
+        <article class="other-card">
+          <div class="other-label">Solar · NASA · Open-Meteo</div>
+          <div class="other-title">Solar Forecast Assistant (Agent Jaanu)</div>
+          <p class="other-body">
+            A free-tier solar intelligence API where Agent Jaanu explains daily
+            solar potential by combining NASA POWER data with weather forecasts.
+          </p>
+          <div class="other-footer">
+            <div class="other-meta">Energy · API-style Agent</div>
+            <a
+              class="btn-mini"
+              href="https://github.com/surajtheking03/SOLAR-FORECAST-ASSISTANT"
+              target="_blank"
+            >
+              View Repo
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <div style="margin-top: 16px; text-align: right;">
+        <a
+          href="https://github.com/surajtheking03"
+          target="_blank"
+          class="btn-ghost"
+          style="font-size: 0.8rem;"
+        >
+          Browse all work on GitHub →
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <h2>Let’s Connect</h2>
+      <p>
+        If you’d like to talk about projects, collaboration, or agentic AI
+        experiments, I’m always happy to chat.
+      </p>
+      <div class="contact-links">
+        <a href="https://github.com/surajtheking03" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/suraj-b-89b907a8/" target="_blank">
+          LinkedIn
+        </a>
+        <a href="mailto:suryasurie3@gmail.com">Email Me</a>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Suraj · Built with a mix of curiosity, code & a little bit of
+      chaos 💻
+    </footer>
+  </div>
 </body>
 </html>
